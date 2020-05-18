@@ -12,7 +12,6 @@ public:
 
 	virtual int calculateCircuit(unsigned int inID, bool& inError);
 protected:
-	virtual int calculate(bool& inError) const = 0;
 private:
 };
 

@@ -7,6 +7,8 @@ class AdderNode : public TwoInOneOutSimpleNode
 {
 protected:
 	virtual int calculate(bool& inError) const;
+	virtual Node* returnMyType() const;
+
 };
 
 #endif

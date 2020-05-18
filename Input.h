@@ -21,7 +21,7 @@ protected:
 		Output* connection;
 		unsigned int score;
 	};
-	std::list<ConnectionScore*> listOfConnectionScores;
+	std::list<ConnectionScore*>* listOfConnectionScores;
 	Output* outputConnection;
 
 private:

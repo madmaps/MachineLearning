@@ -11,6 +11,7 @@ int main()
 {
 	
 	AdderNode* adderOne = new AdderNode();
+	Node* adderClone = adderOne->getClone();
 	SubtractorNode* subberOne = new SubtractorNode();
 	ModularNode* modOne = new ModularNode();
 
@@ -24,11 +25,14 @@ int main()
 	value3->setValue(2);
 	value4->setValue(5);
 
-	adderOne->setInput(0,value1);
-	adderOne->setInput(1, value2);
-	subberOne->setInput(0,adderOne->getOutput(0));
+	//adderOne->setInput(0,value1);
+	//adderOne->setInput(1, value2);
+	adderClone->setInput(0, value1);
+	adderClone->setInput(1, value2);
+
+	subberOne->setInput(0,adderClone->getOutput(0));
 	subberOne->setInput(1, value3);
-	modOne->setInput(0, adderOne->getOutput(0));
+	modOne->setInput(0, adderClone->getOutput(0));
 	modOne->setInput(1, subberOne->getOutput(0));
 
 	Output* Answer = modOne->getOutput(0);

@@ -2,11 +2,25 @@
 
 Node::Node()
 {
+	internalNodes = new std::vector<Node*>();
 	score = 0;
 }
 
+
+
 Node::~Node()
 {
+	for (Node* deleteMe : *internalNodes)
+	{
+		delete deleteMe;
+	}
+	delete internalNodes;
+}
+
+Node * Node::getClone()
+{
+	Node* myClone = returnMyType();
+	return myClone;
 }
 
 void Node::setInput(unsigned int whichInput, Output * inOutput)

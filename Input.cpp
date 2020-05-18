@@ -2,15 +2,16 @@
 
 Input::Input()
 {
-
+	listOfConnectionScores = new std::list<ConnectionScore*>();
 }
 
 Input::~Input()
 {
-	for (ConnectionScore* currentConnection : listOfConnectionScores)
+	for (ConnectionScore* currentConnection : *listOfConnectionScores)
 	{
 		delete currentConnection;
 	}
+	delete listOfConnectionScores;
 }
 
 void Input::setConnection(Output * inNewOutputConnection)
@@ -27,7 +28,7 @@ void Input::giveScore(unsigned int inID, unsigned int inScore)
 {
 	outputConnection->giveScore(inID, inScore);
 	bool foundConnection = false;
-	for (ConnectionScore* currentConnectionScore : listOfConnectionScores)
+	for (ConnectionScore* currentConnectionScore : *listOfConnectionScores)
 	{
 		if (outputConnection == currentConnectionScore->connection)
 		{
@@ -40,7 +41,7 @@ void Input::giveScore(unsigned int inID, unsigned int inScore)
 		ConnectionScore* newConnectionScore = new ConnectionScore();
 		newConnectionScore->connection = outputConnection;
 		newConnectionScore->score = inScore;
-		listOfConnectionScores.push_back(newConnectionScore);
+		listOfConnectionScores->push_back(newConnectionScore);
 	}
 }
 

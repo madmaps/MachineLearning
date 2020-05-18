@@ -13,3 +13,8 @@ int ModularNode::calculate(bool & inError) const
 	}
 	return returnValue;
 }
+
+Node * ModularNode::returnMyType() const
+{
+	return new ModularNode();
+}

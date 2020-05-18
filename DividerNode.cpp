@@ -13,3 +13,8 @@ int DividerNode::calculate(bool& inError) const
 	}
 	return returnValue;
 }
+
+Node * DividerNode::returnMyType() const
+{
+	return new DividerNode();
+}

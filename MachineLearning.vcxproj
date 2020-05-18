@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AdderNode.cpp" />
+    <ClCompile Include="AdvancedNode.cpp" />
     <ClCompile Include="DividerNode.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -130,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdderNode.h" />
+    <ClInclude Include="AdvancedNode.h" />
     <ClInclude Include="DividerNode.h" />
     <ClInclude Include="InputTerminal.h" />
     <ClInclude Include="ModularNode.h" />
