@@ -6,12 +6,12 @@
 #include "AdderNode.h"
 #include "SubtratorNode.h"
 #include "ModularNode.h"
+#include "AdvancedNode.h"
 
 int main()
 {
 	
 	AdderNode* adderOne = new AdderNode();
-	Node* adderClone = adderOne->getClone();
 	SubtractorNode* subberOne = new SubtractorNode();
 	ModularNode* modOne = new ModularNode();
 
@@ -25,26 +25,27 @@ int main()
 	value3->setValue(2);
 	value4->setValue(5);
 
-	//adderOne->setInput(0,value1);
-	//adderOne->setInput(1, value2);
-	adderClone->setInput(0, value1);
-	adderClone->setInput(1, value2);
-
-	subberOne->setInput(0,adderClone->getOutput(0));
+	adderOne->setInput(0, value1);
+	adderOne->setInput(1, value2);
+	subberOne->setInput(0,adderOne->getOutput(0));
 	subberOne->setInput(1, value3);
-	modOne->setInput(0, adderClone->getOutput(0));
+	modOne->setInput(0, adderOne->getOutput(0));
 	modOne->setInput(1, subberOne->getOutput(0));
 
 	Output* Answer = modOne->getOutput(0);
-	
+	unsigned int currentID = 0;
 	bool error = false;
-	Answer->runCircuit(1, error);
-	Answer->giveScore(2, 5);
-
-	error = false;
-	modOne->setInput(1, value4);
-	Answer->runCircuit(3, error);
-	Answer->giveScore(4, 2);
+	unsigned int inID = 0;
+	Answer->runCircuit(currentID++, error);
+	Answer->giveScore(currentID++, 5);
+	Answer->setID(currentID++, inID);
+	Answer->storeConnectionIDs(currentID++); // Problem HERE!!!
+	AdvanceNode* newAdvancedNode = new AdvanceNode();
+	Answer->addNodeToAdvancedCircuit(currentID++, newAdvancedNode);
+	newAdvancedNode->linkConnections();
+	newAdvancedNode->setInput(0, value1);
+	newAdvancedNode->setInput(1, value2);
+	newAdvancedNode->setInput(2, value3);
 
 	if (error)
 	{

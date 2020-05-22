@@ -45,3 +45,28 @@ void Input::giveScore(unsigned int inID, unsigned int inScore)
 	}
 }
 
+void Input::setID(unsigned int inID, unsigned int& newID)
+{
+	outputConnection->setID(inID, newID);
+}
+
+void Input::storeConnectionIDs(unsigned int inID)
+{
+	connectionID = outputConnection->getID();
+	outputConnection->storeConnectionIDs(inID);
+}
+
+unsigned int Input::getConnectionID()const
+{
+	return connectionID;
+}
+
+void Input::setConnectionID(unsigned int inConnectionID)
+{
+	connectionID = inConnectionID;
+}
+
+void Input::addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo)
+{
+	outputConnection->addNodeToAdvancedCircuit(inID, inCircuitToAddTo);
+}

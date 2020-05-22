@@ -8,9 +8,15 @@ class Node;
 class AdvanceNode : public Node
 {
 public:
-	void addNode(Node* inNode);
+	virtual void addNode(unsigned int inID, Node* inNode);
 	virtual int calculateCircuit(unsigned int inID, bool& inError);
+	virtual void linkConnections();
+
 protected:
+	virtual int calculate(bool& inError) const;
+	virtual Node* returnMyType() const;
+
+
 private:
 };
 
