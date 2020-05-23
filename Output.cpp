@@ -50,7 +50,7 @@ void Output::setID(unsigned int inID, unsigned int& newID)
 	if (inID > currentID)
 	{
 		currentID = inID;
-		myID = ++newID;
+		myID = newID++;
 		myNode->setID(inID, newID);
 	}
 }

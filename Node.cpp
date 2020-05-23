@@ -24,6 +24,7 @@ Node * Node::getClone()
 	for (Input* cloneInputs : myClone->listOfInputs)
 	{
 		cloneInputs->setConnectionID(listOfInputs.at(counter)->getConnectionID());
+		counter++;
 	}
 	return myClone;
 }

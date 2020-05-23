@@ -46,6 +46,7 @@ int main()
 	newAdvancedNode->setInput(0, value1);
 	newAdvancedNode->setInput(1, value2);
 	newAdvancedNode->setInput(2, value3);
+	newAdvancedNode->calculateCircuit(currentID++, error);
 
 	if (error)
 	{
