@@ -125,6 +125,7 @@
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Output.cpp" />
     <ClCompile Include="InputTerminal.cpp" />
+    <ClCompile Include="Pane.cpp" />
     <ClCompile Include="SimpleNode.cpp" />
     <ClCompile Include="SubtratorNode.cpp" />
     <ClCompile Include="TwoInOneOutSimpleNode.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="InputTerminal.h" />
     <ClInclude Include="ModularNode.h" />
     <ClInclude Include="MultiplierNode.h" />
+    <ClInclude Include="Pane.h" />
     <ClInclude Include="SimpleNode.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Node.h" />

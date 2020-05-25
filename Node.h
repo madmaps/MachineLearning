@@ -21,15 +21,15 @@ public:
 	virtual void storeConnectionIDs(unsigned int inID);
 	virtual void addNode(unsigned int inID, Node* inNode);
 	void addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo);
-	virtual std::vector<Input*> getListOfInputs()const;
-	virtual std::vector<Output*> getListOfOutputs()const;
+	virtual std::vector<Input*>* getListOfInputs()const;
+	virtual std::vector<Output*>* getListOfOutputs()const;
 
 	
 protected:
 	virtual int calculate(bool& inError) const = 0;
 	virtual Node* returnMyType() const = 0;
-	std::vector<Input*> listOfInputs;
-	std::vector<Output*> listOfOutputs;
+	std::vector<Input*>* listOfInputs;
+	std::vector<Output*>* listOfOutputs;
 	std::vector<Node*>* internalNodes;
 	unsigned int score;
 private:

@@ -11,7 +11,7 @@ SimpleNode::~SimpleNode()
 
 int SimpleNode::calculateCircuit(unsigned int inID, bool& inError)
 {
-	for (Input* currentInput : listOfInputs)
+	for (Input* currentInput : *listOfInputs)
 	{
 		currentInput->getOutputConnection()->runCircuit(inID, inError);
 	}
