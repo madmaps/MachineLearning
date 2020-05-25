@@ -9,6 +9,7 @@
 #include "DividerNode.h"
 #include "MultiplierNode.h"
 #include "AdvancedNode.h"
+#include "Pane.h"
 
 int main()
 {
@@ -21,7 +22,21 @@ int main()
 	SubtractorNode* subberTwo = new SubtractorNode();
 	MultiplierNode* multiOne = new MultiplierNode();
 
-	InputTerminal* value1 = new InputTerminal();
+
+
+	std::vector<Node*>* primaryNodes = new std::vector<Node*>();
+	primaryNodes->push_back(adderOne);
+	primaryNodes->push_back(subberOne);
+	primaryNodes->push_back(modOne);
+	primaryNodes->push_back(divOne);
+	primaryNodes->push_back(multiOne);
+
+	Pane* primaryPane = new Pane(primaryNodes, 30, 100);
+	primaryPane->train();
+
+
+
+	/*InputTerminal* value1 = new InputTerminal();
 	InputTerminal* value2 = new InputTerminal();
 	InputTerminal* value3 = new InputTerminal();
 	InputTerminal* value4 = new InputTerminal();
@@ -86,7 +101,7 @@ int main()
 	else
 	{
 		std::cout << Answer->getValue() << std::endl;
-	}
+	}*/
 	int whatever;
 	std::cin >> whatever;
 	return 0;

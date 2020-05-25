@@ -64,7 +64,7 @@ void Pane::setNumberOfRewireTries(unsigned int inNumberOfTries)
 void Pane::addRandomNodes()
 {
 	std::random_device r;
-	std::mt19937 randomEngine(r);
+	std::mt19937 randomEngine(5);
 	std::uniform_int_distribution<int> numberOfNodesRandomDistribution(minNumberOfRandomNodesToAdd, maxNumberOfRandomNodesToAdd);
 	std::uniform_int_distribution<int> pickRandomNodeToAdd(0, usableNodes->size() - 1);
 	unsigned int randomNode = 0;
@@ -104,13 +104,13 @@ void Pane::addRandomNodes()
 		{
 			std::list<std::list<Node*>*>::iterator nodeIter = myBrain->begin();
 			std::list < std::list<Output*>*>::iterator outputIter = listOfOutputs->begin();
-			for (unsigned int count = 0; count < nodePlacement; count++)
+			for (unsigned int count = 1; count < nodePlacement; count++)
 			{
 				nodeIter++;
 				outputIter++;
 			}
 			(*nodeIter)->push_back(newNode);
-			for (unsigned int j = 0; j < newNode->getListOfOutputs()->size; j++)
+			for (unsigned int j = 0; j < newNode->getListOfOutputs()->size(); j++)
 			{
 				(*outputIter)->push_back(newNode->getListOfOutputs()->at(j));
 			}
