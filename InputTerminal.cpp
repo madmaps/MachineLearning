@@ -25,3 +25,7 @@ void InputTerminal::storeConnectionIDs(unsigned int inID)
 void InputTerminal::addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo)
 {
 }
+
+void InputTerminal::makeRandomConnection(unsigned int inID, std::list<std::list<Output*>*>* inListOfOutputs)
+{
+}

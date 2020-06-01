@@ -19,6 +19,7 @@ public:
 	virtual void storeConnectionIDs(unsigned int inID);
 	virtual unsigned int getID()const;
 	virtual void addNodeToAdvancedCircuit(unsigned int inID, Node* inCircuitToAddTo);
+	virtual void makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, unsigned int inZeroPosition);
 
 protected:
 	unsigned int currentID;

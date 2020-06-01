@@ -3,17 +3,38 @@
 
 Pane::Pane(std::vector<Node*>*& inUsableNodes, unsigned int inMinRandomNodes, unsigned int inMaxRandomNodes, unsigned int inRewireTries) : usableNodes(inUsableNodes)
 {
-	myBrain = new std::list<std::list<Node*>*>();
-	listOfOutputs = new std::list<std::list<Output*>*>();
+	myBrain = new std::deque<std::list<Node*>*>();
+	listOfOutputs = new std::deque<std::list<Output*>*>();
 	everythingWithZeroScore = new std::list<Node*>();
+	inputTerminals = new std::vector<InputTerminal*>();
+	outputTerminals = new std::vector<OutputTerminal*>();
 	minNumberOfRandomNodesToAdd = inMinRandomNodes;
 	maxNumberOfRandomNodesToAdd = inMaxRandomNodes;
 	numberOfRewireTries = inRewireTries;
 	myScore = 0;
+	currentID = 1;
+	zeroPosition = 0;
 }
 
 Pane::~Pane()
 {
+	everythingWithZeroScore->clear();
+	delete everythingWithZeroScore;
+	everythingWithZeroScore = 0;
+
+	inputTerminals->clear();
+	delete inputTerminals;
+	inputTerminals = 0;
+
+	for (OutputTerminal* outputTerminalsToDelete : *outputTerminals)
+	{
+		delete outputTerminalsToDelete;
+		outputTerminalsToDelete = 0;
+	}
+	outputTerminals->clear();
+	delete outputTerminals;
+	outputTerminals = 0;
+
 	for (std::list<Output*>* outputListToDelete : *listOfOutputs)
 	{
 		outputListToDelete->clear();
@@ -38,12 +59,12 @@ Pane::~Pane()
 	myBrain->clear();
 	delete myBrain;
 	myBrain = 0;
-	
 }
 
 void Pane::train()
 {
 	addRandomNodes();
+	reWire();
 }
 
 void Pane::setMaxNumberOfRandomNodesToAdd(unsigned int inMaxNumber)
@@ -61,10 +82,25 @@ void Pane::setNumberOfRewireTries(unsigned int inNumberOfTries)
 	numberOfRewireTries = inNumberOfTries;
 }
 
+void Pane::addInputTerminal(InputTerminal * inInputTerminal)
+{
+	inputTerminals->push_back(inInputTerminal);
+}
+
+void Pane::createNewOutputTerminal()
+{
+	outputTerminals->push_back(new OutputTerminal());
+}
+
+void Pane::setTerminalValue(unsigned int whichTerminal, int inValue)
+{
+	inputTerminals->at(whichTerminal)->setValue(inValue);
+}
+
 void Pane::addRandomNodes()
 {
 	std::random_device r;
-	std::mt19937 randomEngine(5);
+	std::mt19937 randomEngine(65);
 	std::uniform_int_distribution<int> numberOfNodesRandomDistribution(minNumberOfRandomNodesToAdd, maxNumberOfRandomNodesToAdd);
 	std::uniform_int_distribution<int> pickRandomNodeToAdd(0, usableNodes->size() - 1);
 	unsigned int randomNode = 0;
@@ -86,7 +122,9 @@ void Pane::addRandomNodes()
 				newOutputList->push_back(newNode->getListOfOutputs()->at(j));
 			}
 			listOfOutputs->push_front(newOutputList);
+			zeroPosition++;
 			myBrain->push_front(newList);
+			newNode->addMyOuputLocationInTheList(-(int)zeroPosition + 1);
 		}
 		else if (nodePlacement == myBrain->size() + 1)
 		{
@@ -99,12 +137,14 @@ void Pane::addRandomNodes()
 			}
 			listOfOutputs->push_back(newOutputList);
 			myBrain->push_back(newList);
+			newNode->addMyOuputLocationInTheList(listOfOutputs->size() - zeroPosition);
 		}
 		else
 		{
-			std::list<std::list<Node*>*>::iterator nodeIter = myBrain->begin();
-			std::list < std::list<Output*>*>::iterator outputIter = listOfOutputs->begin();
-			for (unsigned int count = 1; count < nodePlacement; count++)
+			std::deque<std::list<Node*>*>::iterator nodeIter = myBrain->begin();
+			std::deque < std::list<Output*>*>::iterator outputIter = listOfOutputs->begin();
+			unsigned int count;
+			for (count = 1; count < nodePlacement; count++)
 			{
 				nodeIter++;
 				outputIter++;
@@ -114,8 +154,15 @@ void Pane::addRandomNodes()
 			{
 				(*outputIter)->push_back(newNode->getListOfOutputs()->at(j));
 			}
+			newNode->addMyOuputLocationInTheList(nodePlacement - zeroPosition);
 
 		}
+		everythingWithZeroScore->push_back(newNode);
 
 	}
+}
+
+void Pane::reWire()
+{
+	outputTerminals->at(0)->makeRandomConnection(currentID++, listOfOutputs, listOfOutputs->size() - (zeroPosition - 1), zeroPosition);
 }

@@ -31,7 +31,8 @@ int main()
 	primaryNodes->push_back(divOne);
 	primaryNodes->push_back(multiOne);
 
-	Pane* primaryPane = new Pane(primaryNodes, 30, 100);
+	Pane* primaryPane = new Pane(primaryNodes, 3, 10);
+	primaryPane->createNewOutputTerminal();
 	primaryPane->train();
 
 

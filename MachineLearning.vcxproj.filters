@@ -98,5 +98,8 @@
     <ClInclude Include="Pane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OutputTerminal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

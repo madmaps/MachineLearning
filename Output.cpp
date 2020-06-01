@@ -78,3 +78,12 @@ void Output::addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo
 		myNode->addNodeToAdvancedCircuit(inID, inCircuitToAddTo);
 	}
 }
+
+void Output::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, unsigned int inZeroPosition)
+{
+	if (inID > currentID)
+	{
+		currentID = inID;
+		myNode->makeRandomConnection(inID, inListOfOutputs, inZeroPosition);
+	}
+}

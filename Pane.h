@@ -2,10 +2,12 @@
 #ifndef __PANE__
 #define __PANE__
 #include <list>
+#include <deque>
 #include <vector>
 #include "Node.h"
 #include "Output.h"
 #include "InputTerminal.h"
+#include "OutputTerminal.h"
 
 class Pane
 {
@@ -18,18 +20,25 @@ public:
 	void setMaxNumberOfRandomNodesToAdd(unsigned int inMaxNumber);
 	void setMinNumberOfRandomNodesToAdd(unsigned int inMinNumber);
 	void setNumberOfRewireTries(unsigned int inNumberOfTries);
+	void addInputTerminal(InputTerminal* inInputTerminal);
+	void createNewOutputTerminal();
+	void setTerminalValue(unsigned int whichTerminal, int inValue);
 protected:
-	std::list<std::list<Node*>*>* myBrain;
-	std::list<std::list<Output*>*>* listOfOutputs;
+	std::deque<std::list<Node*>*>* myBrain;
+	std::deque<std::list<Output*>*>* listOfOutputs;
 	std::list<Node*>* everythingWithZeroScore;
 	std::vector<Node*>*& usableNodes;
-	std::vector<InputTerminal*> inputTerminals;
+	std::vector<InputTerminal*>* inputTerminals;
+	std::vector<OutputTerminal*>* outputTerminals;
 	unsigned int maxNumberOfRandomNodesToAdd;
 	unsigned int minNumberOfRandomNodesToAdd;
 	unsigned int numberOfRewireTries;
 	unsigned int myScore;
+	unsigned int currentID;
+	unsigned int zeroPosition;
 private:
 	void addRandomNodes();
+	void reWire();
 };
 
 

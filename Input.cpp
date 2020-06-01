@@ -70,3 +70,13 @@ void Input::addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo)
 {
 	outputConnection->addNodeToAdvancedCircuit(inID, inCircuitToAddTo);
 }
+
+void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, int inListPosition, unsigned int inZeroPosition)
+{
+	unsigned int possibleOutputs = 0;
+	for (int listCounter = (inListPosition - 1) + (inZeroPosition - 1); listCounter >= 0; listCounter--)
+	{
+		possibleOutputs += inListOfOutputs->at(listCounter)->size();
+	}
+	//outputConnection->makeRandomConnection(inID, inListOfOutputs, inZeroPosition);
+}

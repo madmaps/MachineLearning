@@ -2,6 +2,7 @@
 #ifndef __NODE__
 #define __NODE__
 #include <vector>
+#include <deque>
 #include "Input.h"
 #include "Output.h"
 class Output;
@@ -23,6 +24,8 @@ public:
 	void addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo);
 	virtual std::vector<Input*>* getListOfInputs()const;
 	virtual std::vector<Output*>* getListOfOutputs()const;
+	virtual void makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, unsigned int inZeroPosition);
+	void addMyOuputLocationInTheList(int inMyOuputLocationInTheList);
 
 	
 protected:
@@ -31,6 +34,7 @@ protected:
 	std::vector<Input*>* listOfInputs;
 	std::vector<Output*>* listOfOutputs;
 	std::vector<Node*>* internalNodes;
+	int myOutputLocationInTheList;
 	unsigned int score;
 private:
 

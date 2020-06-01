@@ -100,3 +100,16 @@ std::vector<Output*>* Node::getListOfOutputs() const
 {
 	return listOfOutputs;
 }
+
+void Node::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, unsigned int inZeroPosition)
+{
+	for (Input* currentInput : *listOfInputs)
+	{
+		currentInput->makeRandomConnection(inID, inListOfOutputs, myOutputLocationInTheList, inZeroPosition);
+	}
+}
+
+void Node::addMyOuputLocationInTheList(int inMyOuputLocationInTheList)
+{
+	myOutputLocationInTheList = inMyOuputLocationInTheList;
+}

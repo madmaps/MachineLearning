@@ -137,6 +137,7 @@
     <ClInclude Include="InputTerminal.h" />
     <ClInclude Include="ModularNode.h" />
     <ClInclude Include="MultiplierNode.h" />
+    <ClInclude Include="OutputTerminal.h" />
     <ClInclude Include="Pane.h" />
     <ClInclude Include="SimpleNode.h" />
     <ClInclude Include="Input.h" />
