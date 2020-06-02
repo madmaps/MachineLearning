@@ -1,4 +1,5 @@
 #include "Input.h"
+#include <random>
 
 Input::Input()
 {
@@ -73,10 +74,45 @@ void Input::addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo)
 
 void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, int inListPosition, unsigned int inZeroPosition)
 {
-	unsigned int possibleOutputs = 0;
-	for (int listCounter = (inListPosition - 1) + (inZeroPosition - 1); listCounter >= 0; listCounter--)
+	bool found = false;
+	if (listOfConnectionScores->size() > 0)
 	{
-		possibleOutputs += inListOfOutputs->at(listCounter)->size();
+		unsigned int totalOutputScores = 0;
+		for (ConnectionScore* currentScore : *listOfConnectionScores)
+		{
+			totalOutputScores += currentScore->score;
+		}
+		std::list<ConnectionScore*>::iterator scoreIter = listOfConnectionScores->begin();
+		std::random_device r;
+		std::mt19937 randomEngine(65);
+		std::uniform_int_distribution<int> pickConnection(0, totalOutputScores + 1);
+		unsigned int randomConnection = pickConnection(randomEngine);
+		for (unsigned int i = 0; i < totalOutputScores && !found; i += (*scoreIter)->score)
+		{
+			if (i >= randomConnection)
+			{
+				found = true;
+			}
+			scoreIter++;
+		}
+		scoreIter--;
+		if (found)
+		{
+			outputConnection = (*scoreIter)->connection;
+		}
 	}
+	if (!found)
+	{
+		unsigned int possibleOutputs = 0;
+		for (int listCounter = (inListPosition - 1) + (inZeroPosition - 1); listCounter >= 0; listCounter--)
+		{
+			possibleOutputs += inListOfOutputs->at(listCounter)->size();
+		}
+
+	}
+
+	
+
+
 	//outputConnection->makeRandomConnection(inID, inListOfOutputs, inZeroPosition);
 }
