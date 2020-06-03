@@ -11,7 +11,7 @@ public:
 	virtual void giveScore(unsigned int inID, unsigned int inScore);
 	virtual void setID(unsigned int inID, unsigned int& newID);
 	virtual void storeConnectionIDs(unsigned int inID);
-	void addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo);
+	virtual void addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo);
 	virtual void makeRandomConnection(unsigned int inID, std::list<std::list<Output*>*>* inListOfOutputs);
 
 

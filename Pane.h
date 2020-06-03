@@ -20,7 +20,7 @@ public:
 	void setMaxNumberOfRandomNodesToAdd(unsigned int inMaxNumber);
 	void setMinNumberOfRandomNodesToAdd(unsigned int inMinNumber);
 	void setNumberOfRewireTries(unsigned int inNumberOfTries);
-	void addInputTerminal(InputTerminal* inInputTerminal);
+	void addInputTerminal(Output* inInputTerminal);
 	void createNewOutputTerminal();
 	void setTerminalValue(unsigned int whichTerminal, int inValue);
 protected:
@@ -28,7 +28,7 @@ protected:
 	std::deque<std::list<Output*>*>* listOfOutputs;
 	std::list<Node*>* everythingWithZeroScore;
 	std::vector<Node*>*& usableNodes;
-	std::list<InputTerminal*>* inputTerminals;
+	std::list<Output*>* inputTerminals;
 	std::vector<OutputTerminal*>* outputTerminals;
 	unsigned int maxNumberOfRandomNodesToAdd;
 	unsigned int minNumberOfRandomNodesToAdd;

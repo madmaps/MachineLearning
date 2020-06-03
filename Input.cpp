@@ -84,7 +84,7 @@ void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*
 		}
 		std::list<ConnectionScore*>::iterator scoreIter = listOfConnectionScores->begin();
 		std::random_device r;
-		std::mt19937 randomEngine(65);
+		std::mt19937 randomEngine(r());
 		std::uniform_int_distribution<int> pickConnection(0, totalOutputScores + 1);
 		unsigned int randomConnection = pickConnection(randomEngine);
 		for (unsigned int i = 0; i < totalOutputScores && !found; i += (*scoreIter)->score)
@@ -109,7 +109,7 @@ void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*
 			possibleOutputs += inListOfOutputs->at(listCounter)->size();
 		}
 		std::random_device r;
-		std::mt19937 randomEngine(65);
+		std::mt19937 randomEngine(r());
 		std::uniform_int_distribution<int> randomOutput(0, possibleOutputs - 1);
 		unsigned int outputPick = randomOutput(randomEngine);
 		bool gotAnOutput = false;
@@ -121,9 +121,11 @@ void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*
 			{
 				gotAnOutput = true;
 				std::list<Output*>::iterator outputIter = outputList->begin();
-				for (unsigned int counter = 0; counter <= outputCount - outputPick; counter++)
+				unsigned int counter = 1;
+				while (counter < outputCount - outputPick)
 				{
 					outputIter++;
+					counter++;
 				}
 				outputConnection = *outputIter;
 			}

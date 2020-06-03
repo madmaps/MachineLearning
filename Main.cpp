@@ -31,13 +31,15 @@ int main()
 	primaryNodes->push_back(divOne);
 	primaryNodes->push_back(multiOne);
 
-	Pane* primaryPane = new Pane(primaryNodes, 3, 8);
+	Pane* primaryPane = new Pane(primaryNodes, 300, 500);
 	primaryPane->createNewOutputTerminal();
-	InputTerminal* theInput0 = new InputTerminal();
-	InputTerminal* theInput1 = new InputTerminal();
+	Output* theInput0 = new Output();
+	Output* theInput1 = new Output();
+	theInput0->setAsInputTerminal(true);
+	theInput1->setAsInputTerminal(true);
 
-	theInput0->setValue(1);
-	theInput1->setValue(3);
+	theInput0->setValue(15);
+	theInput1->setValue(4);
 
 	primaryPane->addInputTerminal(theInput0);
 	primaryPane->addInputTerminal(theInput1);

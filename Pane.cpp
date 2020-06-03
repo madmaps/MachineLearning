@@ -1,12 +1,13 @@
 #include "Pane.h"
 #include <random>
+#include <iostream>
 
 Pane::Pane(std::vector<Node*>*& inUsableNodes, unsigned int inMinRandomNodes, unsigned int inMaxRandomNodes, unsigned int inRewireTries) : usableNodes(inUsableNodes)
 {
 	myBrain = new std::deque<std::list<Node*>*>();
 	listOfOutputs = new std::deque<std::list<Output*>*>();
 	everythingWithZeroScore = new std::list<Node*>();
-	inputTerminals = new std::list<InputTerminal*>();
+	inputTerminals = new std::list<Output*>();
 	outputTerminals = new std::vector<OutputTerminal*>();
 	minNumberOfRandomNodesToAdd = inMinRandomNodes;
 	maxNumberOfRandomNodesToAdd = inMaxRandomNodes;
@@ -63,8 +64,23 @@ Pane::~Pane()
 
 void Pane::train()
 {
+	bool error = false;
 	addRandomNodes();
-	reWire();
+	for (unsigned int i = 0; i <= 100; i++)
+	{
+		error = false;
+		reWire();
+		outputTerminals->at(0)->getOutputConnection()->runCircuit(currentID++, error);
+		std::cout << std::endl;
+		if (error)
+		{
+			std::cout << "ERROR!" << std::endl;
+		}
+		else
+		{
+			std::cout << outputTerminals->at(0)->getOutputConnection()->getValue() << std::endl;
+		}
+	}
 }
 
 void Pane::setMaxNumberOfRandomNodesToAdd(unsigned int inMaxNumber)
@@ -82,7 +98,7 @@ void Pane::setNumberOfRewireTries(unsigned int inNumberOfTries)
 	numberOfRewireTries = inNumberOfTries;
 }
 
-void Pane::addInputTerminal(InputTerminal * inInputTerminal)
+void Pane::addInputTerminal(Output* inInputTerminal)
 {
 	inputTerminals->push_back(inInputTerminal);
 }
@@ -94,7 +110,7 @@ void Pane::createNewOutputTerminal()
 
 void Pane::setTerminalValue(unsigned int whichTerminal, int inValue)
 {
-	std::list<InputTerminal*>::iterator iterCount = inputTerminals->begin();
+	std::list<Output*>::iterator iterCount = inputTerminals->begin();
 	for (unsigned int i = 0; i <= inValue; i++)
 	{
 		iterCount++;
@@ -105,7 +121,7 @@ void Pane::setTerminalValue(unsigned int whichTerminal, int inValue)
 void Pane::addRandomNodes()
 {
 	std::random_device r;
-	std::mt19937 randomEngine(65);
+	std::mt19937 randomEngine(r());
 	std::uniform_int_distribution<int> numberOfNodesRandomDistribution(minNumberOfRandomNodesToAdd, maxNumberOfRandomNodesToAdd);
 	std::uniform_int_distribution<int> pickRandomNodeToAdd(0, usableNodes->size() - 1);
 	unsigned int randomNode = 0;
@@ -169,8 +185,7 @@ void Pane::addRandomNodes()
 
 void Pane::reWire()
 {
-	std::list<Output*>* sendInInputTerminals = (std::list<Output*>*)inputTerminals;
-	listOfOutputs->push_front(sendInInputTerminals);
+	listOfOutputs->push_front(inputTerminals);
 	zeroPosition++;
 	outputTerminals->at(0)->makeRandomConnection(currentID++, listOfOutputs, listOfOutputs->size() - (zeroPosition - 1), zeroPosition);
 	listOfOutputs->pop_front();
