@@ -108,11 +108,27 @@ void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*
 		{
 			possibleOutputs += inListOfOutputs->at(listCounter)->size();
 		}
+		std::random_device r;
+		std::mt19937 randomEngine(65);
+		std::uniform_int_distribution<int> randomOutput(0, possibleOutputs - 1);
+		unsigned int outputPick = randomOutput(randomEngine);
+		bool gotAnOutput = false;
+		unsigned int outputCount = 0;
+		for (std::list<Output*>* outputList : *inListOfOutputs)
+		{
+			outputCount += outputList->size();
+			if (outputPick <= outputCount && !gotAnOutput)
+			{
+				gotAnOutput = true;
+				std::list<Output*>::iterator outputIter = outputList->begin();
+				for (unsigned int counter = 0; counter <= outputCount - outputPick; counter++)
+				{
+					outputIter++;
+				}
+				outputConnection = *outputIter;
+			}
+		}
 
 	}
-
-	
-
-
-	//outputConnection->makeRandomConnection(inID, inListOfOutputs, inZeroPosition);
+	outputConnection->makeRandomConnection(inID, inListOfOutputs, inZeroPosition);
 }

@@ -28,7 +28,7 @@ protected:
 	std::deque<std::list<Output*>*>* listOfOutputs;
 	std::list<Node*>* everythingWithZeroScore;
 	std::vector<Node*>*& usableNodes;
-	std::vector<InputTerminal*>* inputTerminals;
+	std::list<InputTerminal*>* inputTerminals;
 	std::vector<OutputTerminal*>* outputTerminals;
 	unsigned int maxNumberOfRandomNodesToAdd;
 	unsigned int minNumberOfRandomNodesToAdd;

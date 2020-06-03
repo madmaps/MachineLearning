@@ -6,7 +6,7 @@ Pane::Pane(std::vector<Node*>*& inUsableNodes, unsigned int inMinRandomNodes, un
 	myBrain = new std::deque<std::list<Node*>*>();
 	listOfOutputs = new std::deque<std::list<Output*>*>();
 	everythingWithZeroScore = new std::list<Node*>();
-	inputTerminals = new std::vector<InputTerminal*>();
+	inputTerminals = new std::list<InputTerminal*>();
 	outputTerminals = new std::vector<OutputTerminal*>();
 	minNumberOfRandomNodesToAdd = inMinRandomNodes;
 	maxNumberOfRandomNodesToAdd = inMaxRandomNodes;
@@ -94,7 +94,12 @@ void Pane::createNewOutputTerminal()
 
 void Pane::setTerminalValue(unsigned int whichTerminal, int inValue)
 {
-	inputTerminals->at(whichTerminal)->setValue(inValue);
+	std::list<InputTerminal*>::iterator iterCount = inputTerminals->begin();
+	for (unsigned int i = 0; i <= inValue; i++)
+	{
+		iterCount++;
+	}
+	(*iterCount)->setValue(inValue);
 }
 
 void Pane::addRandomNodes()
@@ -164,5 +169,10 @@ void Pane::addRandomNodes()
 
 void Pane::reWire()
 {
+	std::list<Output*>* sendInInputTerminals = (std::list<Output*>*)inputTerminals;
+	listOfOutputs->push_front(sendInInputTerminals);
+	zeroPosition++;
 	outputTerminals->at(0)->makeRandomConnection(currentID++, listOfOutputs, listOfOutputs->size() - (zeroPosition - 1), zeroPosition);
+	listOfOutputs->pop_front();
+	zeroPosition--;
 }
