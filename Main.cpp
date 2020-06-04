@@ -31,18 +31,41 @@ int main()
 	primaryNodes->push_back(divOne);
 	primaryNodes->push_back(multiOne);
 
-	Pane* primaryPane = new Pane(primaryNodes, 300, 500);
+	Pane* primaryPane = new Pane(primaryNodes, 5,20);
 	primaryPane->createNewOutputTerminal();
 	Output* theInput0 = new Output();
 	Output* theInput1 = new Output();
+	Output* theInput2 = new Output();
+	Output* theInput3 = new Output();
+	Output* theInput4 = new Output();
+	Output* theInput5 = new Output();
+	Output* theInput6 = new Output();
+
 	theInput0->setAsInputTerminal(true);
 	theInput1->setAsInputTerminal(true);
+	theInput2->setAsInputTerminal(true);
+	theInput3->setAsInputTerminal(true);
+	theInput4->setAsInputTerminal(true);
+	theInput5->setAsInputTerminal(true);
+	theInput6->setAsInputTerminal(true);
 
-	theInput0->setValue(15);
-	theInput1->setValue(4);
+	theInput0->setValue(24);
+	theInput1->setValue(11);
+	theInput2->setValue(78);
+	theInput3->setValue(-3);
+	theInput4->setValue(4);
+	theInput5->setValue(56);
+	theInput6->setValue(5434);
+
 
 	primaryPane->addInputTerminal(theInput0);
 	primaryPane->addInputTerminal(theInput1);
+	primaryPane->addInputTerminal(theInput2);
+	primaryPane->addInputTerminal(theInput3);
+	primaryPane->addInputTerminal(theInput4);
+	primaryPane->addInputTerminal(theInput5);
+	primaryPane->addInputTerminal(theInput6);
+
 
 	primaryPane->train();
 

@@ -87,7 +87,23 @@ void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*
 		std::mt19937 randomEngine(r());
 		std::uniform_int_distribution<int> pickConnection(0, totalOutputScores + 1);
 		unsigned int randomConnection = pickConnection(randomEngine);
-		for (unsigned int i = 0; i < totalOutputScores && !found; i += (*scoreIter)->score)
+		unsigned int i = (*scoreIter)->score;
+		if (randomConnection != totalOutputScores + 1)
+		{
+			while (i <= totalOutputScores && !found)
+			{
+				if (i >= randomConnection)
+				{
+					found = true;
+				}
+				else
+				{
+					scoreIter++;
+					i += (*scoreIter)->score;
+				}
+			}
+		}
+		/*for (unsigned int i = 0; i < totalOutputScores && !found; i += (*scoreIter)->score)
 		{
 			if (i >= randomConnection)
 			{
@@ -95,7 +111,7 @@ void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*
 			}
 			scoreIter++;
 		}
-		scoreIter--;
+		scoreIter--;*/
 		if (found)
 		{
 			outputConnection = (*scoreIter)->connection;

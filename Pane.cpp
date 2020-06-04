@@ -66,7 +66,7 @@ void Pane::train()
 {
 	bool error = false;
 	addRandomNodes();
-	for (unsigned int i = 0; i <= 100; i++)
+	for (unsigned int i = 0; i <= 1000; i++)
 	{
 		error = false;
 		reWire();
@@ -78,6 +78,10 @@ void Pane::train()
 		}
 		else
 		{
+			if (outputTerminals->at(0)->getOutputConnection()->getValue() > 0 && outputTerminals->at(0)->getOutputConnection()->getValue() < 9)
+			{
+				outputTerminals->at(0)->giveScore(currentID++, 1);
+			}
 			std::cout << outputTerminals->at(0)->getOutputConnection()->getValue() << std::endl;
 		}
 	}
