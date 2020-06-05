@@ -1,4 +1,5 @@
 #include "Node.h"
+#include <iostream>
 
 Node::Node()
 {
@@ -105,7 +106,9 @@ void Node::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>
 {
 	for (Input* currentInput : *listOfInputs)
 	{
+		//std::cout << " before input make random connection ";
 		currentInput->makeRandomConnection(inID, inListOfOutputs, myOutputLocationInTheList, inZeroPosition);
+		//std::cout << " after input make random connection ";
 	}
 }
 
@@ -113,3 +116,20 @@ void Node::addMyOuputLocationInTheList(int inMyOuputLocationInTheList)
 {
 	myOutputLocationInTheList = inMyOuputLocationInTheList;
 }
+
+unsigned int Node::getNodeHoops(unsigned int inID)
+{
+	unsigned int count = 0;
+	for (Input* currentInput : *listOfInputs)
+	{
+		count += currentInput->getNodeHoops(inID);
+	}
+	count += 1;
+	return count;
+}
+
+unsigned int Node::getSizeOfInternalNodes() const
+{
+	return internalNodes->size();
+}
+

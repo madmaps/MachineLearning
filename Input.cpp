@@ -1,5 +1,6 @@
 #include "Input.h"
 #include <random>
+#include <iostream>
 
 Input::Input()
 {
@@ -74,6 +75,9 @@ void Input::addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo)
 
 void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, int inListPosition, unsigned int inZeroPosition)
 {
+	std::random_device r;
+	std::mt19937 randomEngine(r());
+	const unsigned int probability = 2;
 	bool found = false;
 	if (listOfConnectionScores->size() > 0)
 	{
@@ -83,12 +87,10 @@ void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*
 			totalOutputScores += currentScore->score;
 		}
 		std::list<ConnectionScore*>::iterator scoreIter = listOfConnectionScores->begin();
-		std::random_device r;
-		std::mt19937 randomEngine(r());
-		std::uniform_int_distribution<int> pickConnection(0, totalOutputScores + 1);
+		std::uniform_int_distribution<int> pickConnection(0, totalOutputScores + probability);
 		unsigned int randomConnection = pickConnection(randomEngine);
 		unsigned int i = (*scoreIter)->score;
-		if (randomConnection != totalOutputScores + 1)
+		if (randomConnection < totalOutputScores)
 		{
 			while (i <= totalOutputScores && !found)
 			{
@@ -103,15 +105,6 @@ void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*
 				}
 			}
 		}
-		/*for (unsigned int i = 0; i < totalOutputScores && !found; i += (*scoreIter)->score)
-		{
-			if (i >= randomConnection)
-			{
-				found = true;
-			}
-			scoreIter++;
-		}
-		scoreIter--;*/
 		if (found)
 		{
 			outputConnection = (*scoreIter)->connection;
@@ -124,8 +117,6 @@ void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*
 		{
 			possibleOutputs += inListOfOutputs->at(listCounter)->size();
 		}
-		std::random_device r;
-		std::mt19937 randomEngine(r());
 		std::uniform_int_distribution<int> randomOutput(0, possibleOutputs - 1);
 		unsigned int outputPick = randomOutput(randomEngine);
 		bool gotAnOutput = false;
@@ -149,4 +140,9 @@ void Input::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*
 
 	}
 	outputConnection->makeRandomConnection(inID, inListOfOutputs, inZeroPosition);
+}
+
+unsigned int Input::getNodeHoops(unsigned int inID)
+{
+	return outputConnection->getNodeHoops(inID);
 }

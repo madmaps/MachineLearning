@@ -1,6 +1,7 @@
 // Matthew Applin
 // Machine Learning
 
+
 #include <iostream>
 #include "InputTerminal.h"
 #include "AdderNode.h"
@@ -10,6 +11,7 @@
 #include "MultiplierNode.h"
 #include "AdvancedNode.h"
 #include "Pane.h"
+
 
 int main()
 {
@@ -31,7 +33,7 @@ int main()
 	primaryNodes->push_back(divOne);
 	primaryNodes->push_back(multiOne);
 
-	Pane* primaryPane = new Pane(primaryNodes, 5,20);
+	Pane* primaryPane = new Pane(primaryNodes, 20,50);
 	primaryPane->createNewOutputTerminal();
 	Output* theInput0 = new Output();
 	Output* theInput1 = new Output();
@@ -49,13 +51,13 @@ int main()
 	theInput5->setAsInputTerminal(true);
 	theInput6->setAsInputTerminal(true);
 
-	theInput0->setValue(24);
-	theInput1->setValue(11);
-	theInput2->setValue(78);
-	theInput3->setValue(-3);
-	theInput4->setValue(4);
-	theInput5->setValue(56);
-	theInput6->setValue(5434);
+	theInput0->setValue(-61);
+	theInput1->setValue(2656);
+	theInput2->setValue(443);
+	theInput3->setValue(-654);
+	theInput4->setValue(555);
+	theInput5->setValue(34);
+	theInput6->setValue(-7);
 
 
 	primaryPane->addInputTerminal(theInput0);

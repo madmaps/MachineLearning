@@ -22,6 +22,8 @@ public:
 	virtual void addNodeToAdvancedCircuit(unsigned int inID, Node* inCircuitToAddTo);
 	virtual void makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, unsigned int inZeroPosition);
 	virtual void setAsInputTerminal(bool inValue);
+	virtual unsigned int getNodeHoops(unsigned int inID);
+	virtual unsigned int getSizeOfInternalNodes()const;
 
 protected:
 	unsigned int currentID;

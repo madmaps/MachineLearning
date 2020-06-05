@@ -13,7 +13,7 @@ class Node
 public:
 	Node();
 	~Node();
-	Node* getClone();
+	virtual Node* getClone();
 	virtual int calculateCircuit(unsigned int inID, bool& inError) = 0;
 	virtual void setInput(unsigned int whichInput, Output* inOutput);
 	virtual Output* getOutput(unsigned int whichOutput)const;
@@ -21,11 +21,13 @@ public:
 	virtual void setID(unsigned int inID, unsigned int& newID);
 	virtual void storeConnectionIDs(unsigned int inID);
 	virtual void addNode(unsigned int inID, Node* inNode);
-	void addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo);
+	virtual void addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo);
 	virtual std::vector<Input*>* getListOfInputs()const;
 	virtual std::vector<Output*>* getListOfOutputs()const;
 	virtual void makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, unsigned int inZeroPosition);
-	void addMyOuputLocationInTheList(int inMyOuputLocationInTheList);
+	virtual void addMyOuputLocationInTheList(int inMyOuputLocationInTheList);
+	virtual unsigned int getNodeHoops(unsigned int inID);
+	virtual unsigned int getSizeOfInternalNodes()const;
 
 	
 protected:

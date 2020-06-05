@@ -1,4 +1,17 @@
 #include "AdvancedNode.h"
+#include <iostream>
+
+
+Node * AdvanceNode::getClone()
+{
+	AdvanceNode* myClone = (AdvanceNode*)returnMyType();
+	for (Node* currentNode : *internalNodes)
+	{
+		myClone->pushOnNode(currentNode->getClone());
+	}
+	myClone->linkConnections();
+	return myClone;
+}
 
 
 void AdvanceNode::addNode(unsigned int inID, Node * inNode)
@@ -39,6 +52,16 @@ void AdvanceNode::linkConnections()
 		}
 	}
 	listOfOutputs->push_back(internalNodes->at(0)->getListOfOutputs()->at(0));
+}
+
+void AdvanceNode::pushOnNode(Node * inNode)
+{
+	internalNodes->push_back(inNode);
+}
+
+void AdvanceNode::addMyOuputLocationInTheList(int inMyOuputLocationInTheList)
+{
+	internalNodes->at(0)->addMyOuputLocationInTheList(inMyOuputLocationInTheList);
 }
 
 int AdvanceNode::calculate(bool & inError) const

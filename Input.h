@@ -21,7 +21,7 @@ public:
 	virtual void setConnectionID(unsigned int inConnectionID);
 	void addNodeToAdvancedCircuit(unsigned int inID, Node* inCircuitToAddTo);
 	virtual void makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, int inListPosition, unsigned int inZeroPosition);
-
+	virtual unsigned int getNodeHoops(unsigned int inID);
 
 
 

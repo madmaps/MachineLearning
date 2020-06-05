@@ -1,4 +1,5 @@
 #include "Output.h"
+#include <iostream>
 
 Output::Output()
 {
@@ -29,12 +30,12 @@ void Output::runCircuit(unsigned int inID, bool& inError)
 		validInput = false;
 		if (inID > currentID)
 		{
+			currentID = inID;
 			int value = myNode->calculateCircuit(inID, inError);
 			if (!inError)
 			{
 				myValue = value;
 				validInput = true;
-				currentID = inID;
 			}
 		}
 	}
@@ -46,8 +47,8 @@ void Output::giveScore(unsigned int inID, unsigned int inScore)
 	{
 		if (inID > currentID)
 		{
-			myNode->giveScore(inID, inScore);
 			currentID = inID;
+			myNode->giveScore(inID, inScore);
 		}
 	}
 }
@@ -102,17 +103,43 @@ void Output::addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo
 
 void Output::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, unsigned int inZeroPosition)
 {
+	//std::cout << " before Output random connection ";
 	if (!inputTerminal)
 	{
 		if (inID > currentID)
 		{
 			currentID = inID;
+			//std::cout << " before node make random connection ";
 			myNode->makeRandomConnection(inID, inListOfOutputs, inZeroPosition);
+			//std::cout << " after node make random connection ";
 		}
 	}
+	//std::cout << " after Output random connection ";
 }
 
 void Output::setAsInputTerminal(bool inValue)
 {
 	inputTerminal = inValue;
+}
+
+unsigned int Output::getNodeHoops(unsigned int inID)
+{
+	if (!inputTerminal)
+	{
+		if (inID > currentID)
+		{
+			currentID = inID;
+			return myNode->getNodeHoops(inID);
+		}
+	}
+	return 0;
+}
+
+unsigned int Output::getSizeOfInternalNodes() const
+{
+	if (!inputTerminal)
+	{
+		return myNode->getSizeOfInternalNodes();
+	}
+	return 0;
 }

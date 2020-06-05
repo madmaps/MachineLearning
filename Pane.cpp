@@ -1,6 +1,7 @@
 #include "Pane.h"
 #include <random>
 #include <iostream>
+#include "AdvancedNode.h"
 
 Pane::Pane(std::vector<Node*>*& inUsableNodes, unsigned int inMinRandomNodes, unsigned int inMaxRandomNodes, unsigned int inRewireTries) : usableNodes(inUsableNodes)
 {
@@ -65,26 +66,48 @@ Pane::~Pane()
 void Pane::train()
 {
 	bool error = false;
-	addRandomNodes();
-	for (unsigned int i = 0; i <= 1000; i++)
+	for (unsigned int i = 0; i <= 100000; i++)
 	{
+		if (i % 10 == 0)
+		{
+			addRandomNodes();
+		}
 		error = false;
 		reWire();
 		outputTerminals->at(0)->getOutputConnection()->runCircuit(currentID++, error);
-		std::cout << std::endl;
 		if (error)
 		{
-			std::cout << "ERROR!" << std::endl;
+			std::cout << "  ERROR  ";
 		}
 		else
 		{
+			std::cout << "  " << outputTerminals->at(0)->getOutputConnection()->getValue() << "  ";
 			if (outputTerminals->at(0)->getOutputConnection()->getValue() > 0 && outputTerminals->at(0)->getOutputConnection()->getValue() < 9)
 			{
+				if (outputTerminals->at(0)->getOutputConnection()->getValue() == 5)
+				{
+
+					unsigned int inID = 0;
+					unsigned int nodeHoops = outputTerminals->at(0)->getNodeHoops(currentID++);
+					if (outputTerminals->at(0)->getNodeHoops(currentID++) > 1)
+					{
+
+						outputTerminals->at(0)->getOutputConnection()->setID(currentID++, inID);
+						outputTerminals->at(0)->getOutputConnection()->storeConnectionIDs(currentID++);
+						AdvanceNode* newAdvancedNode = new AdvanceNode();
+						outputTerminals->at(0)->getOutputConnection()->addNodeToAdvancedCircuit(currentID++, newAdvancedNode);
+						newAdvancedNode->linkConnections();
+						usableNodes->push_back(newAdvancedNode);
+						std::cout << usableNodes->size();
+					}
+
+				}
 				outputTerminals->at(0)->giveScore(currentID++, 1);
 			}
-			std::cout << outputTerminals->at(0)->getOutputConnection()->getValue() << std::endl;
 		}
+
 	}
+	std::cout << "Size of usable nodes: " << usableNodes->size();
 }
 
 void Pane::setMaxNumberOfRandomNodesToAdd(unsigned int inMaxNumber)
@@ -180,10 +203,8 @@ void Pane::addRandomNodes()
 				(*outputIter)->push_back(newNode->getListOfOutputs()->at(j));
 			}
 			newNode->addMyOuputLocationInTheList(nodePlacement - zeroPosition);
-
 		}
 		everythingWithZeroScore->push_back(newNode);
-
 	}
 }
 
