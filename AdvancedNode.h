@@ -8,6 +8,8 @@ class Node;
 class AdvanceNode : public Node
 {
 public:
+	AdvanceNode();
+	~AdvanceNode();
 	virtual Node* getClone();
 	//virtual void makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, unsigned int inZeroPosition);
 	virtual void addNode(unsigned int inID, Node* inNode);
@@ -19,7 +21,9 @@ public:
 protected:
 	virtual int calculate(bool& inError) const;
 	virtual Node* returnMyType() const;
-
+	std::list<Input*>* internalInputs;
+	std::list<Output*>* internalOutputs;
+	std::list<Output*>* internalOutputTerminals;
 
 private:
 };

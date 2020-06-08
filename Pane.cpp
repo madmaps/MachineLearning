@@ -71,7 +71,6 @@ void Pane::train()
 		if (i % 10 == 0)
 		{
 			addRandomNodes();
-			std::cout << " Usable Nodes(" << usableNodes->size() << ") ";
 		}
 		error = false;
 		reWire();
@@ -92,22 +91,13 @@ void Pane::train()
 					unsigned int nodeHoops = outputTerminals->at(0)->getNodeHoops(currentID++);
 					if (outputTerminals->at(0)->getNodeHoops(currentID++) > 1)
 					{
-						std::cout << " resetID ";
 						outputTerminals->at(0)->getOutputConnection()->resetID(currentID++);
-						std::cout << " setID ";
 						outputTerminals->at(0)->getOutputConnection()->setID(currentID++, inID);
-						std::cout << " store connectionID ";
 						outputTerminals->at(0)->getOutputConnection()->storeConnectionIDs(currentID++);
-						std::cout << " create new node ";
 						AdvanceNode* newAdvancedNode = new AdvanceNode();
-						std::cout << " Add node to advanceCircuit ";
 						outputTerminals->at(0)->getOutputConnection()->addNodeToAdvancedCircuit(currentID++, newAdvancedNode);
-						std::cout << " Link connection ";
-
 						newAdvancedNode->linkConnections();
-						std::cout << " After Added to usable Nodes ";
 						usableNodes->push_back(newAdvancedNode);
-						std::cout << usableNodes->size();
 					}
 
 				}
@@ -116,7 +106,6 @@ void Pane::train()
 		}
 
 	}
-	std::cout << "Size of usable nodes: " << usableNodes->size();
 }
 
 void Pane::setMaxNumberOfRandomNodesToAdd(unsigned int inMaxNumber)
@@ -165,15 +154,7 @@ void Pane::addRandomNodes()
 	for (unsigned int i = 0; i < numberOfNodesToAdd; i++)
 	{
 		randomNode = pickRandomNodeToAdd(randomEngine);
-		if (randomNode > 5)
-		{
-			std::cout << " Adding random node ";
-		}
 		Node* newNode = usableNodes->at(randomNode)->getClone();
-		if (randomNode > 4)
-		{
-			std::cout << " After adding random node ";
-		}
 		std::uniform_int_distribution<int> pickNodePlacement(0, myBrain->size() + 1);
 		unsigned int nodePlacement = pickNodePlacement(randomEngine);
 		if (nodePlacement == 0)

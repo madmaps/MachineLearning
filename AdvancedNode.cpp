@@ -2,6 +2,33 @@
 #include <iostream>
 
 
+AdvanceNode::AdvanceNode()
+{
+	internalInputs = new std::list<Input*>();
+	internalOutputs = new std::list<Output*>();
+	internalOutputTerminals = new std::list<Output*>();
+}
+
+AdvanceNode::~AdvanceNode()
+{
+	internalInputs->clear();
+	delete internalInputs;
+	internalInputs = 0;
+
+	internalOutputs->clear();
+	delete internalOutputs;
+	internalOutputs = 0;
+
+	for (Output* currentOutput : *internalOutputTerminals)
+	{
+		delete currentOutput;
+		currentOutput = 0;
+	}
+	internalOutputTerminals->clear();
+	delete internalOutputTerminals;
+	internalOutputTerminals = 0;
+}
+
 Node * AdvanceNode::getClone()
 {
 	AdvanceNode* myClone = (AdvanceNode*)returnMyType();
@@ -27,17 +54,19 @@ void AdvanceNode::addNode(unsigned int inID, Node * inNode)
 
 int AdvanceNode::calculateCircuit(unsigned int inID, bool & inError)
 {
+	//std::cout << " Running AdvancedNode! ";
+	std::list<Output*>::iterator terminalIter = internalOutputTerminals->begin();
 	for (Input* currentInput : *listOfInputs)
 	{
 		currentInput->getOutputConnection()->runCircuit(inID, inError);
+		(*terminalIter)->setValue(currentInput->getOutputConnection()->getValue());
+		terminalIter++;
 	}
 	if (!inError)
 	{
-		/*for (Output* currentOutput : *listOfOutputs)
-		{
-			currentOutput->runCircuit(inID, inError);
-		}*/
-		internalNodes->at(0)->getOutput(0)->runCircuit(inID, inError);
+		std::list<Output*>::iterator internalOutputIter = internalOutputs->begin();
+		(*internalOutputIter)->runCircuit(inID, inError);
+		return (*internalOutputIter)->getValue();
 	}
 	return 0;
 }
@@ -54,10 +83,16 @@ void AdvanceNode::linkConnections()
 			}
 			else
 			{
-				listOfInputs->push_back(nodeInput);
+				Output* newOutputTerminal = new Output();
+				newOutputTerminal->setAsInputTerminal(true);
+				nodeInput->setConnection(newOutputTerminal);
+				internalOutputTerminals->push_back(newOutputTerminal);
+				internalInputs->push_back(nodeInput);
+				listOfInputs->push_back(new Input());
 			}
 		}
 	}
+	internalOutputs->push_back(internalNodes->at(0)->getOutput(0));
 	listOfOutputs->push_back(new Output(this));
 }
 
@@ -65,11 +100,6 @@ void AdvanceNode::pushOnNode(Node * inNode)
 {
 	internalNodes->push_back(inNode);
 }
-
-//void AdvanceNode::addMyOuputLocationInTheList(int inMyOuputLocationInTheList)
-//{
-	//internalNodes->at(0)->addMyOuputLocationInTheList(inMyOuputLocationInTheList);
-//}
 
 int AdvanceNode::calculate(bool & inError) const
 {
