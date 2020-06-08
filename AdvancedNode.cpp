@@ -10,6 +10,12 @@ Node * AdvanceNode::getClone()
 		myClone->pushOnNode(currentNode->getClone());
 	}
 	myClone->linkConnections();
+	unsigned int counter = 0;
+	for (Input* cloneInputs : *myClone->getListOfInputs())
+	{
+		cloneInputs->setConnectionID(listOfInputs->at(counter)->getConnectionID());
+		counter++;
+	}
 	return myClone;
 }
 
@@ -27,10 +33,11 @@ int AdvanceNode::calculateCircuit(unsigned int inID, bool & inError)
 	}
 	if (!inError)
 	{
-		for (Output* currentOutput : *listOfOutputs)
+		/*for (Output* currentOutput : *listOfOutputs)
 		{
 			currentOutput->runCircuit(inID, inError);
-		}
+		}*/
+		internalNodes->at(0)->getOutput(0)->runCircuit(inID, inError);
 	}
 	return 0;
 }
@@ -51,7 +58,7 @@ void AdvanceNode::linkConnections()
 			}
 		}
 	}
-	listOfOutputs->push_back(internalNodes->at(0)->getListOfOutputs()->at(0));
+	listOfOutputs->push_back(new Output(this));
 }
 
 void AdvanceNode::pushOnNode(Node * inNode)
@@ -59,10 +66,10 @@ void AdvanceNode::pushOnNode(Node * inNode)
 	internalNodes->push_back(inNode);
 }
 
-void AdvanceNode::addMyOuputLocationInTheList(int inMyOuputLocationInTheList)
-{
-	internalNodes->at(0)->addMyOuputLocationInTheList(inMyOuputLocationInTheList);
-}
+//void AdvanceNode::addMyOuputLocationInTheList(int inMyOuputLocationInTheList)
+//{
+	//internalNodes->at(0)->addMyOuputLocationInTheList(inMyOuputLocationInTheList);
+//}
 
 int AdvanceNode::calculate(bool & inError) const
 {

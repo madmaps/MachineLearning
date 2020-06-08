@@ -28,6 +28,7 @@ public:
 	virtual void addMyOuputLocationInTheList(int inMyOuputLocationInTheList);
 	virtual unsigned int getNodeHoops(unsigned int inID);
 	virtual unsigned int getSizeOfInternalNodes()const;
+	virtual void resetID(unsigned int inID);
 
 	
 protected:

@@ -14,7 +14,7 @@ public:
 	virtual int calculateCircuit(unsigned int inID, bool& inError);
 	virtual void linkConnections();
 	virtual void pushOnNode(Node* inNode);
-	virtual void addMyOuputLocationInTheList(int inMyOuputLocationInTheList);
+	//virtual void addMyOuputLocationInTheList(int inMyOuputLocationInTheList);
 
 protected:
 	virtual int calculate(bool& inError) const;

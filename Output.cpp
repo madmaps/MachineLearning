@@ -103,18 +103,14 @@ void Output::addNodeToAdvancedCircuit(unsigned int inID, Node * inCircuitToAddTo
 
 void Output::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>*>* inListOfOutputs, unsigned int inZeroPosition)
 {
-	//std::cout << " before Output random connection ";
 	if (!inputTerminal)
 	{
 		if (inID > currentID)
 		{
 			currentID = inID;
-			//std::cout << " before node make random connection ";
 			myNode->makeRandomConnection(inID, inListOfOutputs, inZeroPosition);
-			//std::cout << " after node make random connection ";
 		}
 	}
-	//std::cout << " after Output random connection ";
 }
 
 void Output::setAsInputTerminal(bool inValue)
@@ -142,4 +138,17 @@ unsigned int Output::getSizeOfInternalNodes() const
 		return myNode->getSizeOfInternalNodes();
 	}
 	return 0;
+}
+
+void Output::resetID(unsigned int inID)
+{
+	if (!inputTerminal)
+	{
+		if (inID > currentID)
+		{
+			currentID = inID;
+			myID = 0;
+			myNode->resetID(inID);
+		}
+	}
 }

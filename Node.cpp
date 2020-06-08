@@ -106,9 +106,7 @@ void Node::makeRandomConnection(unsigned int inID, std::deque<std::list<Output*>
 {
 	for (Input* currentInput : *listOfInputs)
 	{
-		//std::cout << " before input make random connection ";
 		currentInput->makeRandomConnection(inID, inListOfOutputs, myOutputLocationInTheList, inZeroPosition);
-		//std::cout << " after input make random connection ";
 	}
 }
 
@@ -131,5 +129,13 @@ unsigned int Node::getNodeHoops(unsigned int inID)
 unsigned int Node::getSizeOfInternalNodes() const
 {
 	return internalNodes->size();
+}
+
+void Node::resetID(unsigned int inID)
+{
+	for (Input* currentInput : *listOfInputs)
+	{
+		currentInput->resetID(inID);
+	}
 }
 

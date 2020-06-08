@@ -24,6 +24,7 @@ public:
 	virtual void setAsInputTerminal(bool inValue);
 	virtual unsigned int getNodeHoops(unsigned int inID);
 	virtual unsigned int getSizeOfInternalNodes()const;
+	virtual void resetID(unsigned int inID);
 
 protected:
 	unsigned int currentID;

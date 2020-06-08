@@ -146,3 +146,8 @@ unsigned int Input::getNodeHoops(unsigned int inID)
 {
 	return outputConnection->getNodeHoops(inID);
 }
+
+void Input::resetID(unsigned int inID)
+{
+	outputConnection->resetID(inID);
+}
